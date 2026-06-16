@@ -1,0 +1,26 @@
+project:
+  type: default
+  output-dir: output
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-title: "Sumário"
+    toc-depth: 2
+    code-fold: true
+    embed-resources: true
+    fig-width: 9
+    fig-height: 4.5
+    fig-dpi: 150
+
+execute:
+  warning: false
+  message: false
+  freeze: auto
+
+knitr:
+  opts_chunk:
+    fig.path: "output/figures/"
+
+lang: pt

@@ -1,0 +1,215 @@
+---
+title: "Relatório Mensal do IPCA"
+date: today
+---
+
+```{r}
+#| label: setup
+#| include: false
+
+source("R/coleta.R")
+source("R/tratamento.R")
+source("R/graficos.R")
+
+# ── Coleta ──────────────────────────────────────────────────────────────────
+df_ipca   <- coletar_ipca_mensal()
+df_meta   <- coletar_meta_inflacao()
+df_grupos <- coletar_ipca_grupos()
+
+# ── Tratamento ───────────────────────────────────────────────────────────────
+df_12m       <- calcular_acumulado_12m(df_ipca)
+df_ano       <- calcular_acumulado_ano(df_ipca)
+df_saz       <- preparar_sazonal(df_ipca)
+lst_contrib  <- preparar_contribuicoes(df_grupos)
+df_meta_m    <- preparar_meta_mensal(df_ipca, df_meta)
+
+# ── Atalhos para inline code ─────────────────────────────────────────────────
+meses_pt <- c("janeiro","fevereiro","março","abril","maio","junho",
+              "julho","agosto","setembro","outubro","novembro","dezembro")
+
+ultimo       <- tail(df_ipca, 1)
+ultimo_12m   <- tail(dplyr::filter(df_12m, !is.na(acum_12m)), 1)
+ultimo_ano   <- tail(dplyr::filter(df_ano, !is.na(acum_ano)),  1)
+ultimo_meta  <- tail(dplyr::filter(df_meta_m, !is.na(meta)), 1)
+
+mes_ref      <- paste(meses_pt[lubridate::month(ultimo$data)],
+                      "de", lubridate::year(ultimo$data))
+
+fmt_br <- function(x, digits = 2) {
+  formatC(x, format = "f", digits = digits, decimal.mark = ",", big.mark = ".")
+}
+
+ipca_mm_fmt  <- fmt_br(ultimo$ipca_mm)
+acum_12m_fmt <- fmt_br(ultimo_12m$acum_12m)
+acum_ano_fmt <- fmt_br(ultimo_ano$acum_ano)
+meta_fmt     <- fmt_br(ultimo_meta$meta)
+meta_sup_fmt <- fmt_br(ultimo_meta$meta + 1.5)
+meta_inf_fmt <- fmt_br(ultimo_meta$meta - 1.5)
+
+# Maior contribuidor do mês
+contrib_mes <- lst_contrib$mes_atual |>
+  dplyr::mutate(contribuicao = variacao * peso / 100) |>
+  dplyr::arrange(dplyr::desc(contribuicao))
+
+top_grupo        <- contrib_mes$grupo[1]
+top_contrib_fmt  <- fmt_br(contrib_mes$contribuicao[1])
+```
+
+## Introdução
+
+Este relatório apresenta a leitura mensal do Índice de Preços ao Consumidor Amplo (IPCA),
+apurado pelo IBGE e divulgado sistematicamente como o indicador oficial de inflação do Brasil.
+A análise combina a variação corrente com a trajetória acumulada e a composição setorial do índice,
+oferecendo uma leitura integrada do comportamento dos preços ao consumidor.
+
+Em **`r mes_ref`**, o IPCA registrou variação de **`r ipca_mm_fmt`%** em relação ao mês anterior.
+No acumulado dos últimos doze meses, o índice atingiu **`r acum_12m_fmt`%**,
+enquanto o acumulado no ano corrente alcançou **`r acum_ano_fmt`%**.
+A meta central de inflação vigente é de **`r meta_fmt`%**, com banda de tolerância
+entre `r meta_inf_fmt`% e `r meta_sup_fmt`%.
+
+Os dados foram obtidos diretamente das fontes primárias: série 433 (IPCA mensal) e série 13521
+(meta de inflação) do Sistema Gerenciador de Séries Temporais do Banco Central do Brasil,
+e tabela 7060 do SIDRA/IBGE para a abertura por grupos de despesa.
+
+---
+
+## Panorama Mensal
+
+```{r}
+#| label: fig-mensal
+#| fig-cap: "Variação percentual mensal do IPCA. Fonte: BCB/SGS, série 433."
+
+grafico_ipca_mensal(df_ipca)
+```
+
+A variação de `r ipca_mm_fmt`% em `r mes_ref` coloca o índice
+`r if (ultimo$ipca_mm > dplyr::lag(df_ipca$ipca_mm, 1)[nrow(df_ipca)]) "acima" else "abaixo"`
+da leitura do mês anterior
+(`r fmt_br(df_ipca$ipca_mm[nrow(df_ipca) - 1])`%).
+O gráfico acima apresenta as últimas 24 observações e permite identificar movimentos
+sazonais recorrentes — em particular, a pressão típica no início do ano letivo
+e os repasses do reajuste de tarifas de energia.
+
+A evolução recente sugere
+`r if (mean(tail(df_ipca$ipca_mm, 3)) > mean(tail(df_ipca$ipca_mm, 6))) "aceleração" else "desaceleração"`
+na margem: a média das três últimas leituras
+(`r fmt_br(mean(tail(df_ipca$ipca_mm, 3)))`%) está
+`r if (mean(tail(df_ipca$ipca_mm, 3)) > mean(tail(df_ipca$ipca_mm, 6))) "acima" else "abaixo"`
+da média dos últimos seis meses
+(`r fmt_br(mean(tail(df_ipca$ipca_mm, 6)))`%).
+Esse sinal de curto prazo deve ser interpretado com cautela, pois variações mensais
+são sujeitas a componentes voláteis e sazonalidade.
+
+---
+
+## Acumulado em 12 Meses
+
+```{r}
+#| label: fig-12m
+#| fig-cap: "IPCA acumulado em 12 meses e meta de inflação com banda de tolerância de ±1,5 p.p. Fontes: BCB/SGS, séries 433 e 13521."
+
+grafico_ipca_12m(df_12m, df_meta_m)
+```
+
+O acumulado em 12 meses de **`r acum_12m_fmt`%** é a métrica mais relevante para a
+avaliação do cumprimento da meta de inflação pelo Banco Central.
+A linha azul representa a trajetória efetiva do índice; a banda sombreada delimita
+o intervalo de tolerância da meta vigente (`r meta_inf_fmt`%–`r meta_sup_fmt`%).
+
+A análise histórica evidencia os episódios de desvio prolongado da meta —
+notadamente o período pós-pandemia — e a posterior convergência promovida
+pelo ciclo de aperto monetário.
+A posição atual do acumulado 12m em relação à banda sinaliza
+`r if (ultimo_12m$acum_12m > ultimo_meta$meta + 1.5) "descumprimento do limite superior da meta" else if (ultimo_12m$acum_12m < ultimo_meta$meta - 1.5) "descumprimento do limite inferior da meta" else "cumprimento da meta dentro do intervalo de tolerância"`.
+
+---
+
+## Sazonalidade
+
+```{r}
+#| label: fig-sazonal
+#| fig-cap: "Sobreposição das variações mensais por ano. O ano corrente aparece em azul com linha mais espessa. Fonte: BCB/SGS, série 433."
+#| fig-height: 5
+
+grafico_sazonal(df_saz)
+```
+
+O gráfico de sazonalidade sobrepõe as leituras mensais de cada ano desde 2015,
+revelando padrões estruturais no comportamento do IPCA ao longo do calendário.
+São recorrentes a pressão no primeiro trimestre — associada a reajustes de serviços,
+planos de saúde e mensalidades escolares — e a relativa moderação nos meses de
+julho e agosto, período de menor pressão de demanda.
+
+A trajetória de `r lubridate::year(ultimo$data)` (linha azul) pode ser comparada com
+a nuvem dos anos anteriores para identificar desvios em relação ao padrão histórico.
+Leituras consistentemente acima (ou abaixo) da nuvem indicam choques estruturais
+que fogem do comportamento sazonal típico.
+
+---
+
+## Contribuições por Grupo
+
+```{r}
+#| label: fig-contrib
+#| fig-cap: "Contribuição em pontos percentuais de cada grupo ao IPCA do mês de referência. Calculado como variação × peso / 100. Fonte: IBGE/SIDRA, tabela 7060."
+#| fig-height: 5
+
+grafico_contribuicoes(lst_contrib$mes_atual)
+```
+
+A decomposição por grupos de despesa evidencia quais segmentos da cesta de consumo
+foram os principais determinantes da inflação em `r mes_ref`.
+O grupo **`r top_grupo`** liderou as contribuições positivas, adicionando
+**`r top_contrib_fmt` p.p.** ao índice cheio.
+A contribuição de cada grupo é calculada como o produto da variação percentual
+pelo peso do grupo no índice, dividido por cem — o que permite somar algebricamente
+as parcelas para reproduzir o IPCA total do mês.
+
+A leitura das contribuições é complementar à variação bruta: um grupo com variação
+elevada mas peso pequeno pode impactar menos o índice do que um grupo com variação
+moderada e peso expressivo — como é o caso típico de Alimentação e Transportes.
+Monitorar a persistência das contribuições positivas nesses grupos de maior peso
+é fundamental para avaliar a dinâmica inflacionária nos próximos meses.
+
+---
+
+## Encerramento
+
+```{r}
+#| label: tabela-resumo
+#| echo: false
+
+knitr::kable(
+  data.frame(
+    Indicador = c(
+      "Variação mensal",
+      "Acumulado no ano",
+      "Acumulado 12 meses",
+      "Meta de inflação",
+      "Limite superior da meta",
+      "Limite inferior da meta"
+    ),
+    Valor = c(
+      paste0(ipca_mm_fmt,  "%"),
+      paste0(acum_ano_fmt, "%"),
+      paste0(acum_12m_fmt, "%"),
+      paste0(meta_fmt,     "%"),
+      paste0(meta_sup_fmt, "%"),
+      paste0(meta_inf_fmt, "%")
+    )
+  ),
+  col.names = c("Indicador", paste("Valor —", mes_ref)),
+  align = c("l", "r")
+)
+```
+
+O relatório é atualizado mensalmente de forma automatizada a partir das fontes primárias
+(BCB e IBGE), sem intervenção manual nos dados.
+Todas as séries históricas utilizadas estão disponíveis nos sistemas oficiais de
+disseminação de estatísticas do Banco Central do Brasil e do Instituto Brasileiro de
+Geografia e Estatística.
+
+---
+
+*Análise produzida com R e Quarto. Dados: BCB/SGS e IBGE/SIDRA.*

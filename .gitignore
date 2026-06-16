@@ -1,0 +1,18 @@
+# R
+.Rproj.user/
+.Rhistory
+.RData
+.Rprofile
+*.Rproj
+
+# Quarto
+_freeze/
+.quarto/
+output/
+*_files/
+*.knit.md
+*.utf8.md
+
+# Sistema
+.DS_Store
+Thumbs.db
