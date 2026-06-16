@@ -1,0 +1,8 @@
+output/
+_freeze/
+.git/
+.Rproj.user/
+*.Rproj
+_check_pkgs.R
+_gen_manifest.R
+.gitignore
