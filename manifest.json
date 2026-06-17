@@ -455,7 +455,7 @@
         "Package": "evaluate",
         "Type": "Package",
         "Title": "Parsing and Evaluation Tools that Provide More Details than the\nDefault",
-        "Version": "0.23",
+        "Version": "0.22",
         "Authors@R": "c(\n    person(\"Hadley\", \"Wickham\", role = \"aut\"),\n    person(\"Yihui\", \"Xie\", role = c(\"aut\", \"cre\"), email = \"xie@yihui.name\", comment = c(ORCID = \"0000-0003-0645-5666\")),\n    person(\"Michael\", \"Lawrence\", role = \"ctb\"),\n    person(\"Thomas\", \"Kluyver\", role = \"ctb\"),\n    person(\"Jeroen\", \"Ooms\", role = \"ctb\"),\n    person(\"Barret\", \"Schloerke\", role = \"ctb\"),\n    person(\"Adam\", \"Ryczkowski\", role = \"ctb\"),\n    person(\"Hiroaki\", \"Yutani\", role = \"ctb\"),\n    person(\"Michel\", \"Lang\", role = \"ctb\"),\n    person(\"Karolis\", \"Koncevičius\", role = \"ctb\"),\n    person(given = \"Posit Software, PBC\", role = c(\"cph\", \"fnd\"))\n    )",
         "Description": "Parsing and evaluation tools that make it easy to recreate the\n    command line behaviour of R.",
         "License": "MIT + file LICENSE",
@@ -468,12 +468,12 @@
         "Encoding": "UTF-8",
         "Config/testthat/edition": "3",
         "NeedsCompilation": "no",
-        "Packaged": "2023-11-01 13:28:50 UTC; yihui",
+        "Packaged": "2023-09-29 02:32:03 UTC; yihui",
         "Author": "Hadley Wickham [aut],\n  Yihui Xie [aut, cre] (<https://orcid.org/0000-0003-0645-5666>),\n  Michael Lawrence [ctb],\n  Thomas Kluyver [ctb],\n  Jeroen Ooms [ctb],\n  Barret Schloerke [ctb],\n  Adam Ryczkowski [ctb],\n  Hiroaki Yutani [ctb],\n  Michel Lang [ctb],\n  Karolis Koncevičius [ctb],\n  Posit Software, PBC [cph, fnd]",
         "Maintainer": "Yihui Xie <xie@yihui.name>",
         "Repository": "CRAN",
-        "Date/Publication": "2023-11-01 14:10:02 UTC",
-        "Built": "R 4.2.3; ; 2024-01-10 01:55:15 UTC; windows"
+        "Date/Publication": "2023-09-29 04:30:05 UTC",
+        "Built": "R 4.2.2; ; 2026-06-17 00:05:11 UTC; windows"
       }
     },
     "fansi": {
@@ -783,9 +783,9 @@
         "Package": "highr",
         "Type": "Package",
         "Title": "Syntax Highlighting for R Source Code",
-        "Version": "0.10",
+        "Version": "0.12",
         "Authors@R": "c(\n    person(\"Yihui\", \"Xie\", role = c(\"aut\", \"cre\"), email = \"xie@yihui.name\", comment = c(ORCID = \"0000-0003-0645-5666\")),\n    person(\"Yixuan\", \"Qiu\", role = \"aut\"),\n    person(\"Christopher\", \"Gandrud\", role = \"ctb\"),\n    person(\"Qiang\", \"Li\", role = \"ctb\")\n    )",
-        "Description": "Provides syntax highlighting for R source code. Currently it\n    supports LaTeX and HTML output. Source code of other languages is supported\n    via Andre Simon's highlight package (<http://www.andre-simon.de>).",
+        "Description": "Provides syntax highlighting for R source code. Currently it\n    supports LaTeX and HTML output. Source code of other languages is supported\n    via Andre Simon's highlight package (<https://gitlab.com/saalen/highlight>).",
         "Depends": "R (>= 3.3.0)",
         "Imports": "xfun (>= 0.18)",
         "Suggests": "knitr, markdown, testit",
@@ -794,14 +794,14 @@
         "BugReports": "https://github.com/yihui/highr/issues",
         "VignetteBuilder": "knitr",
         "Encoding": "UTF-8",
-        "RoxygenNote": "7.2.3",
+        "RoxygenNote": "7.3.3",
         "NeedsCompilation": "no",
-        "Packaged": "2022-12-22 06:43:07 UTC; yihui",
-        "Author": "Yihui Xie [aut, cre] (<https://orcid.org/0000-0003-0645-5666>),\n  Yixuan Qiu [aut],\n  Christopher Gandrud [ctb],\n  Qiang Li [ctb]",
+        "Packaged": "2026-03-05 19:48:41 UTC; yihui",
+        "Author": "Yihui Xie [aut, cre] (ORCID: <https://orcid.org/0000-0003-0645-5666>),\n  Yixuan Qiu [aut],\n  Christopher Gandrud [ctb],\n  Qiang Li [ctb]",
         "Maintainer": "Yihui Xie <xie@yihui.name>",
         "Repository": "CRAN",
-        "Date/Publication": "2022-12-22 07:00:02 UTC",
-        "Built": "R 4.2.3; ; 2024-01-10 02:32:56 UTC; windows"
+        "Date/Publication": "2026-03-06 06:30:47 UTC",
+        "Built": "R 4.2.2; ; 2026-06-17 00:03:49 UTC; windows"
       }
     },
     "htmltools": {
@@ -2099,24 +2099,24 @@
         "Package": "xfun",
         "Type": "Package",
         "Title": "Supporting Functions for Packages Maintained by 'Yihui Xie'",
-        "Version": "0.41",
+        "Version": "0.43",
         "Authors@R": "c(\n  person(\"Yihui\", \"Xie\", role = c(\"aut\", \"cre\", \"cph\"), email = \"xie@yihui.name\", comment = c(ORCID = \"0000-0003-0645-5666\")),\n  person(\"Wush\", \"Wu\", role = \"ctb\"),\n  person(\"Daijiang\", \"Li\", role = \"ctb\"),\n  person(\"Xianying\", \"Tan\", role = \"ctb\"),\n  person(\"Salim\", \"Brüggemann\", role = \"ctb\", email = \"salim-b@pm.me\", comment = c(ORCID = \"0000-0002-5329-5987\")),\n  person(\"Christophe\", \"Dervieux\", role = \"ctb\"),\n  person(given = \"Posit Software, PBC\", role = c(\"cph\", \"fnd\")),\n  person()\n  )",
         "Description": "Miscellaneous functions commonly used in other packages maintained by 'Yihui Xie'.",
-        "Imports": "stats, tools",
-        "Suggests": "testit, parallel, codetools, rstudioapi, tinytex (>= 0.30),\nmime, markdown (>= 1.5), knitr (>= 1.42), htmltools, remotes,\npak, rhub, renv, curl, jsonlite, magick, yaml, rmarkdown",
+        "Imports": "grDevices, stats, tools",
+        "Suggests": "testit, parallel, codetools, rstudioapi, tinytex (>= 0.30),\nmime, markdown (>= 1.5), knitr (>= 1.42), htmltools, remotes,\npak, rhub, renv, curl, xml2, jsonlite, magick, yaml, rmarkdown",
         "License": "MIT + file LICENSE",
         "URL": "https://github.com/yihui/xfun",
         "BugReports": "https://github.com/yihui/xfun/issues",
         "Encoding": "UTF-8",
-        "RoxygenNote": "7.2.3",
+        "RoxygenNote": "7.3.1",
         "VignetteBuilder": "knitr",
         "NeedsCompilation": "yes",
-        "Packaged": "2023-11-01 13:27:07 UTC; yihui",
+        "Packaged": "2024-03-25 16:26:43 UTC; yihui",
         "Author": "Yihui Xie [aut, cre, cph] (<https://orcid.org/0000-0003-0645-5666>),\n  Wush Wu [ctb],\n  Daijiang Li [ctb],\n  Xianying Tan [ctb],\n  Salim Brüggemann [ctb] (<https://orcid.org/0000-0002-5329-5987>),\n  Christophe Dervieux [ctb],\n  Posit Software, PBC [cph, fnd]",
         "Maintainer": "Yihui Xie <xie@yihui.name>",
         "Repository": "CRAN",
-        "Date/Publication": "2023-11-01 14:00:02 UTC",
-        "Built": "R 4.2.3; x86_64-w64-mingw32; 2024-01-10 01:55:33 UTC; windows",
+        "Date/Publication": "2024-03-25 17:00:02 UTC",
+        "Built": "R 4.2.3; x86_64-w64-mingw32; 2024-04-24 00:33:35 UTC; windows",
         "ExperimentalWindowsRuntime": "ucrt",
         "Archs": "x64"
       }
@@ -2246,31 +2246,31 @@
       "checksum": "b6019e5d78bc7934cb33fe14da4f81a9"
     },
     "output/figures/fig-12m-1.png": {
-      "checksum": "d9cd13b5719ea8b7f3f6e7e90bbfc2a5"
+      "checksum": "58ae6cad95365f648f764447c6131239"
     },
     "output/figures/fig-contrib-1.png": {
-      "checksum": "8f6adb22a7f5211f8df37a8748ffc20e"
+      "checksum": "e8def3dd421207f9eb67bcf43f50cd26"
     },
     "output/figures/fig-mensal-1.png": {
-      "checksum": "7044c1555f12c399b4495e8b2d164662"
+      "checksum": "52882ab796fe5722a3acd675ba61cdd0"
     },
     "output/figures/fig-sazonal-1.png": {
-      "checksum": "7e2e07282cd25164929cb24fef576b84"
+      "checksum": "7419d9a3fc5a70564666f1f51298b790"
     },
     "output/output/figures/fig-12m-1.png": {
-      "checksum": "d9cd13b5719ea8b7f3f6e7e90bbfc2a5"
+      "checksum": "58ae6cad95365f648f764447c6131239"
     },
     "output/output/figures/fig-contrib-1.png": {
-      "checksum": "8f6adb22a7f5211f8df37a8748ffc20e"
+      "checksum": "e8def3dd421207f9eb67bcf43f50cd26"
     },
     "output/output/figures/fig-mensal-1.png": {
-      "checksum": "7044c1555f12c399b4495e8b2d164662"
+      "checksum": "52882ab796fe5722a3acd675ba61cdd0"
     },
     "output/output/figures/fig-sazonal-1.png": {
-      "checksum": "7e2e07282cd25164929cb24fef576b84"
+      "checksum": "7419d9a3fc5a70564666f1f51298b790"
     },
     "output/relatorio_ipca.html": {
-      "checksum": "a200ced0af919be35601bfa300d0972e"
+      "checksum": "aaa8ec46c13c68e8acca0bcd9cc9b583"
     },
     "output/relatorio_ipca_files/libs/bootstrap/bootstrap-67270d1595a62d14f123c043d4fb2f18.min.css": {
       "checksum": "67270d1595a62d14f123c043d4fb2f18"
